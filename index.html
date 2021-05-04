@@ -13,7 +13,10 @@
 
     function init() {
         webSocket = new WebSocket("wss://"+window.location.hostname);
-        webSocket.onopen = function(evt) { console.log('Websocket opened.'); };
+        webSocket.onopen = function(evt) {
+            console.log('Websocket opened.');
+            webSocket.send("queryState");
+        };
         webSocket.onclose = function(evt) {
             console.log('Websocket closed! Trying to reconnect every 2 seconds...');
             setTimeout(function (){init();},2000);
@@ -24,9 +27,13 @@
             let e = document.getElementById('ledStatus');
             if (evt.data === 'ledOn') {
                 e.style.color = 'cyan';
+                document.getElementById('ledOff').disabled = false;
+                document.getElementById('ledOn').disabled = true;
             }
             else if (evt.data === 'ledOff') {
                 e.style.color = 'black';
+                document.getElementById('ledOn').disabled = false;
+                document.getElementById('ledOff').disabled = true;
             }
             else {
                 console.log('unknown event');
