@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>LED</title>
+</head>
+<body onload="javascript:init()">
+<h1>Remote Control Demo</h1>
+<div id="ledStatus"><b>LED</b></div>
+<button id="ledOn" type="button" onclick="buttonClick(this);">On</button>
+<button id="ledOff" type="button" onclick="buttonClick(this);">Off</button>
+<script>
+    let webSock;
+
+    function init() {
+        webSock = new WebSocket("ws://localhost:3000");
+        webSock.onopen = function(evt) { console.log('websock open'); };
+        webSock.onclose = function(evt) { console.log('websock close'); };
+        webSock.onerror = function(evt) { console.log(evt); };
+        webSock.onmessage = function(evt) {
+            console.log(evt);
+            let e = document.getElementById('ledStatus');
+            if (evt.data === 'ledOn') {
+                e.style.color = 'red';
+            }
+            else if (evt.data === 'ledOff') {
+                e.style.color = 'black';
+            }
+            else {
+                console.log('unknown event');
+            }
+        };
+    }
+
+    async function buttonClick(e) {
+        await webSock.send(e.id);
+        console.log(e.id);
+    }
+
+</script>
+</body>
+</html>
