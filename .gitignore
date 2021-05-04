@@ -102,3 +102,5 @@ fabric.properties
 .idea/codestream.xml
 
 # End of copied content
+
+access.log

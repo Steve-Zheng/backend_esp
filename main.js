@@ -4,9 +4,13 @@ const path = require("path");
 const webSocket = require('ws');
 const express = require('express');
 const app = express();
+const fs = require('fs');
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(require('morgan')('combined', { stream: accessLogStream }));
 
 const server = http.createServer(app);//create a server
 
@@ -16,6 +20,10 @@ let currentState = "ledOff";
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+app.get('/favicon.ico', function(req, res) {
+    res.sendFile(path.join(__dirname + '/favicon.ico'));
 });
 
 s.on('connection',function (ws,req){
