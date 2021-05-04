@@ -13,10 +13,10 @@
 
     function init() {
         webSocket = new WebSocket("wss://"+window.location.hostname);
-        webSocket.onopen = function(evt) { console.log('websocket open'); };
+        webSocket.onopen = function(evt) { console.log('Websocket opened.'); };
         webSocket.onclose = function(evt) {
-            console.log('websocket closed!');
-            setTimeout(function (){init();},1000);
+            console.log('Websocket closed! Trying to reconnect every 2 seconds...');
+            setTimeout(function (){init();},2000);
         };
         webSocket.onerror = function(evt) { console.log(evt); };
         webSocket.onmessage = function(evt) {
