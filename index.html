@@ -9,14 +9,19 @@
 <button id="ledOn" type="button" onclick="buttonClick(this);">On</button>
 <button id="ledOff" type="button" onclick="buttonClick(this);">Off</button>
 <script>
-    let webSock;
+    let webSocket;
 
     function init() {
-        webSock = new WebSocket("wss://"+window.location.hostname);
-        webSock.onopen = function(evt) { console.log('websock open'); };
-        webSock.onclose = function(evt) { console.log('websock close'); };
-        webSock.onerror = function(evt) { console.log(evt); };
-        webSock.onmessage = function(evt) {
+        webSocket = new WebSocket("wss://"+window.location.hostname);
+        webSocket.onopen = function(evt) { console.log('websocket open'); };
+        webSocket.onclose = function(evt) {
+            console.log('websocket closed!');
+            while(webSocket.readyState === WebSocket.CLOSED){
+                setTimeout(function (){webSocket.connect();},2000);
+            }
+        };
+        webSocket.onerror = function(evt) { console.log(evt); };
+        webSocket.onmessage = function(evt) {
             console.log(evt);
             let e = document.getElementById('ledStatus');
             if (evt.data === 'ledOn') {
