@@ -10,6 +10,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.enable("trust proxy");
+app.set('trust proxy',function(){ return true; });
 app.use(require('morgan')('combined', { stream: accessLogStream }));
 
 const server = http.createServer(app);//create a server
