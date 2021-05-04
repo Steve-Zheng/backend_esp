@@ -12,7 +12,7 @@
     let webSock;
 
     function init() {
-        webSock = new WebSocket("ws://localhost:3000");
+        webSock = new WebSocket("wss://"+window.location.hostname);
         webSock.onopen = function(evt) { console.log('websock open'); };
         webSock.onclose = function(evt) { console.log('websock close'); };
         webSock.onerror = function(evt) { console.log(evt); };
