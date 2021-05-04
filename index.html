@@ -16,7 +16,7 @@
         webSocket.onopen = function(evt) { console.log('websocket open'); };
         webSocket.onclose = function(evt) {
             console.log('websocket closed!');
-            while(webSocket.readyState === WebSocket.CLOSED){
+            while(webSocket.readyState == WebSocket.CLOSED){
                 console.log("Trying to reconnect...");
                 setTimeout(function (){webSocket.connect();},2000);
             }
