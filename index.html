@@ -16,7 +16,7 @@
         webSocket.onopen = function(evt) { console.log('websocket open'); };
         webSocket.onclose = function(evt) {
             console.log('websocket closed!');
-            const timer = ms => new Promise(res => setTimeout(res, ms))
+            const timer = ms => new Promise(res => setTimeout(res, ms));
             async function looper(){
                 while(webSocket.readyState === WebSocket.CLOSED){
                     console.log("Trying to reconnect...");
@@ -24,6 +24,7 @@
                     await timer(2000);
                 }
             }
+            looper();
         };
         webSocket.onerror = function(evt) { console.log(evt); };
         webSocket.onmessage = function(evt) {
