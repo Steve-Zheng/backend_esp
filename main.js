@@ -11,12 +11,9 @@ app.use(bodyParser.json());
 const server = http.createServer(app);//create a server
 
 const s = new webSocket.Server({server});
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-app.get('/led', function(req, res) {
-    res.sendFile(path.join(__dirname + '/led.html'));
 });
 
 s.on('connection',function (ws,req){
