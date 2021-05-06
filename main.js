@@ -53,3 +53,6 @@ s.on('connection',function (ws,req){
     console.log("new client connected");
 });
 server.listen(3000);
+
+//TODO: Support for multiple devices
+//TODO: Add authentication
